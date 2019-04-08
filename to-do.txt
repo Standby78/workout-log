@@ -1,0 +1,6 @@
+to do fitness app
+
+- background syn from indexeddb
+- offline indicator using window.eventlistener('offline', () => alert('offline mf!'))
+- eventlistener za online, pa pošalješ/pokupiš data
+- https://github.com/carmalou/background-sync-example/blob/master/bg-sync-fallback-pt2.md

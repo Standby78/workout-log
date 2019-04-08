@@ -1,28 +1,84 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Workout } from './components';
+
+import './App.scss';
+
+const workouts = {
+    day_id: 0,
+    user_id: 0,
+    active: true,
+    workoutDays: [
+        [
+            {
+                exec_id: 'squats',
+                sets: 5,
+                reps: 5,
+                weight: 95,
+            },
+            {
+                exec_id: 'romanian deadlift',
+                sets: 5,
+                reps: 5,
+                weight: 80,
+            },
+            {
+                exec_id: 'close grip pull up',
+                sets: 5,
+                reps: 5,
+                weight: 0,
+            },
+        ],
+        [
+            {
+                exec_id: 'bench press',
+                sets: 5,
+                reps: 5,
+                weight: 100,
+            },
+            {
+                exec_id: 'bent over rows',
+                sets: 5,
+                reps: 5,
+                weight: 90,
+            },
+            {
+                exec_id: 'dips',
+                sets: 5,
+                reps: 5,
+                weight: 0,
+            },
+        ],
+        [
+            {
+                exec_id: 'deadlift',
+                sets: 5,
+                reps: 5,
+                weight: 130,
+            },
+            {
+                exec_id: 'overhead press',
+                sets: 5,
+                reps: 5,
+                weight: 60,
+            },
+            {
+                exec_id: 'wide grip pull ups',
+                sets: 5,
+                reps: 5,
+                weight: 0,
+            },
+        ],
+    ],
+};
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <Workout day={workouts} />
+            </div>
+        );
+    }
 }
 
 export default App;
