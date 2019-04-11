@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 
 import { Exercise } from '../../components';
-
 import './workout.scss';
 
 export default class Workout extends Component {
@@ -21,9 +21,9 @@ export default class Workout extends Component {
     }
 
     render() {
-        const { day } = this.props;
+        const { day, setWorkout } = this.props;
         const { day_id } = this.state;
-        console.log(day_id);
+
         return (
             <div>
                 <SwipeableViews hysteresis={0.2} onChangeIndex={index => this.setDay(index)}>
@@ -33,7 +33,7 @@ export default class Workout extends Component {
                         </div>
                     ))}
                 </SwipeableViews>
-                <button type="button" value={day_id}>Start Workout</button>
+                <Link to="/daily-workout" value={day_id} onClick={() => setWorkout(day.workoutDays[day_id])}>Start Workout</Link>
             </div>
         );
     }

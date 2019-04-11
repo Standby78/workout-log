@@ -4,3 +4,5 @@ to do fitness app
 - offline indicator using window.eventlistener('offline', () => alert('offline mf!'))
 - eventlistener za online, pa pošalješ/pokupiš data
 - https://github.com/carmalou/background-sync-example/blob/master/bg-sync-fallback-pt2.md
+- spremi daylie workout u context, od toga stvaraš novi day koji ide bazu. trenutačno je samo spreman context, ali ne znam kako
+  ga mijenjati iz child komponente

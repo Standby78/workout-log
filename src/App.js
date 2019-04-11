@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Workout } from './components';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { DailyWorkout, Workout } from './components';
 
 import './App.scss';
 
@@ -71,11 +72,39 @@ const workouts = {
     ],
 };
 
+const NotFoundComponent = () => <div>404</div>;
+
 class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            dayWorkout: {},
+        };
+        this.setDayWorkout = this.setDayWorkout.bind(this);
+    }
+
+    setDayWorkout(dayWorkout) {
+        this.setState({
+            dayWorkout,
+        });
+    }
+
     render() {
+        const { dayWorkout } = this.state;
         return (
             <div>
-                <Workout day={workouts} />
+                <Router>
+                    <div>
+                        <Switch>
+                            <Route exact path="/" render={props => <Workout {...props} day={workouts} setWorkout={this.setDayWorkout} />} />
+                            <Route
+                                path="/daily-workout"
+                                render={props => <DailyWorkout {...props} workout={dayWorkout} />}
+                            />
+                            <Route component={NotFoundComponent} />
+                        </Switch>
+                    </div>
+                </Router>
             </div>
         );
     }

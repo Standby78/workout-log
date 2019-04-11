@@ -15,7 +15,8 @@ export default class Exercise extends Component {
         return (
             <div className="exercise-component">
                 <div>
-                    {exercise.exec_id}<br />Weight: {(exercise.weight !== 0) ? ` ${exercise.weight} kg` : ' bodyweight'} {exercise.sets} x {exercise.reps}
+                    {exercise.exec_id}<br />
+                    Weight: {(exercise.weight !== 0) ? ` ${exercise.weight} kg` : ' bodyweight'} {exercise.sets} x {exercise.reps}
                 </div>
                 <div>
                     {reps}
