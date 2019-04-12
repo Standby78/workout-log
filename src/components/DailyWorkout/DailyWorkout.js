@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import Exercise from './../Exercise/Exercise';
-
-function isEmpty(obj) {
-    return (Object.keys(obj).length === 0);
-}
+import { isEmpty, getCurrentDay } from '../../services/services';
 
 export default class DailyWorkout extends Component {
-    render() {
+    constructor(props) {
+        super(props);
         const { workout } = this.props;
-        console.log(workout, Object.keys(workout).legth);
+        this.state = {
+            workout,
+        };
+    }
+
+    componentDidMount() {
+        const { workout } = this.props;
+        if (isEmpty(workout)) {
+            getCurrentDay().then((res) => {
+                this.setState({ workout: res[0][res[0].length - 1] });
+            });
+        }
+    }
+
+    saveWorkout() {
+        console.log('saved!', this.props);
+    }
+
+    render() {
+        const { workout } = this.state;
         let exercises = '';
         if (!isEmpty(workout)) {
             exercises = workout.map((exercise, index) =>
@@ -24,6 +41,7 @@ export default class DailyWorkout extends Component {
             <div>
                 {exercises}
                 <br /><a href="/">Back</a>
+                <button type="button" style={{ float: 'right' }} onClick={() => this.saveWorkout()}>Save Workout</button>
             </div>
         );
     }
