@@ -2,13 +2,23 @@ import db from '../db';
 
 import { exercises } from '../constants/workout';
 
-
 export function isEmpty(obj) {
     return (Object.keys(obj).length === 0);
 }
 
 export function getCurrentDay() {
-    return db.day.toArray();
+    return db.day.toArray().then(res => res);
+}
+
+export function setActiveWorkout(day_id) {
+    db.day.clear().then(db.workouts.get({ id: day_id }, (result) => {
+        const day = result.map(res => db.exercise.get({ id: res }).then(rest => rest));
+        Promise.all(day).then(resultingDay => db.day.put(resultingDay));
+    }));
+}
+
+export function checkActiveWorkout() {
+    return db.day.count();
 }
 
 export function setOfflineDefault() {
@@ -19,30 +29,30 @@ export function setOfflineDefault() {
                 name: 'Sinisa',
                 email: 'sinisa.steblaj@gmail.com',
                 weight: '120.6',
+                workoutDays: {},
+                lastday: '0',
             });
         }
     });
     db.exercise.get({ exec_id: 'squats' }, (exercise) => {
         if (!exercise) {
             db.exercise.bulkPut(exercises).then(() => {
-                db.workout.count((count) => {
+                db.workouts.count((count) => {
                     if (count === 0) {
                         db.exercise.toArray((e) => {
                             const days = [
                                 [
-                                    e[0], e[1], e[2],
+                                    e[0].id, e[1].id, e[2].id,
                                 ],
                                 [
-                                    e[3], e[4], e[5],
+                                    e[3].id, e[4].id, e[5].id,
                                 ],
                                 [
-                                    e[6], e[7], e[8],
+                                    e[6].id, e[7].id, e[8].id,
                                 ],
                             ];
-                            db.workout.bulkPut([days[0], days[1], days[2]]).then(
-                                db.workout.toArray((res) => {
-                                    db.day.put(res);
-                                }),
+                            db.workouts.bulkPut([days[0], days[1], days[2]]).then(
+                                db.user.update(1, { workoutDays: [1, 2, 3] }),
                             );
                         });
                     }
@@ -50,5 +60,10 @@ export function setOfflineDefault() {
             });
         }
     });
-    return getCurrentDay();
+    return db.user.get(1, async (user) => {
+        const workout = user.workoutDays.map(workouts => db.workouts.get(workouts, (result => result)));
+        const res = await Promise.all(workout);
+        const resmap = res.map(days => days.map(ex => db.exercise.get(ex)));
+        return resmap.map(promise => Promise.all(promise));
+    });
 }

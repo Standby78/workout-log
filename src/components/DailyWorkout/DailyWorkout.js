@@ -15,7 +15,7 @@ export default class DailyWorkout extends Component {
         const { workout } = this.props;
         if (isEmpty(workout)) {
             getCurrentDay().then((res) => {
-                this.setState({ workout: res[0][res[0].length - 1] });
+                this.setState({ workout: res[0] });
             });
         }
     }
@@ -27,7 +27,7 @@ export default class DailyWorkout extends Component {
     render() {
         const { workout } = this.state;
         let exercises = '';
-        if (!isEmpty(workout)) {
+        if (workout !== undefined && workout.length > 0) {
             exercises = workout.map((exercise, index) =>
                 (
                     <div key={index}>

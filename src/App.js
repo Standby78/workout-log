@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import { setOfflineDefault } from './services/services';
+import { setOfflineDefault, setActiveWorkout, checkActiveWorkout } from './services/services';
 
 import { DailyWorkout, Workout } from './components';
 
@@ -15,31 +15,35 @@ class App extends Component {
         this.state = {
             dayWorkout: {},
             allDays: [],
+            workoutActive: 0,
         };
         this.setDayWorkout = this.setDayWorkout.bind(this);
     }
 
     componentDidMount() {
-        setOfflineDefault().then((res) => {
-            this.setState({ allDays: res[0] });
+        setOfflineDefault().then((promiseFromApi) => {
+            Promise.all(promiseFromApi).then(result => this.setState({ allDays: result }));
+        });
+        checkActiveWorkout().then((res) => {
+            if (res) this.setState({ workoutActive: true }, () => this.setState({ workoutActive: false }));
         });
     }
 
-    setDayWorkout(dayWorkout) {
+    setDayWorkout(dayWorkout, day_id) {
         this.setState({
             dayWorkout,
         });
-        // write a function to set the active day in indexedDB so on refresh the app is still able to determine the current workout
-        // current way of logging the workouts per day, and in general a cycle is not well thoutght - back to the drawing board
+        setActiveWorkout(day_id);
     }
 
     render() {
-        const { dayWorkout, allDays } = this.state;
+        const { dayWorkout, allDays, workoutActive } = this.state;
         return (
             <div>
                 <Router>
                     <div>
                         <Switch>
+                            {workoutActive && <Redirect to="/daily-workout" />}
                             { allDays
                             && <Route exact path="/" render={props => <Workout {...props} day={allDays} setWorkout={this.setDayWorkout} />} />
                             }
