@@ -6,6 +6,8 @@ db.version(1).stores({
     day: '++id, user_id, workout',
     workouts: '++id, author, exercises',
     exercise: '++id, exec_id, sets, reps, weight',
+    log: '++id, date, user, dayLog',
+    tempLog: '++id, dayLog',
 });
 
 export default db;

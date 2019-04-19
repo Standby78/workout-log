@@ -5,9 +5,17 @@ import { exercises } from '../constants/workout';
 export function isEmpty(obj) {
     return (Object.keys(obj).length === 0);
 }
+export function saveTempLog(dayLog) {
+    db.tempLog.clear().then(db.tempLog.put(dayLog));
+    console.log(dayLog);
+}
 
 export function getCurrentDay() {
     return db.day.toArray().then(res => res);
+}
+
+export function updateLog() {
+    console.log('saved');
 }
 
 export function setActiveWorkout(day_id) {

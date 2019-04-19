@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Exercise from './../Exercise/Exercise';
-import { isEmpty, getCurrentDay } from '../../services/services';
+import { isEmpty, getCurrentDay, saveTempLog } from '../../services/services';
 
 export default class DailyWorkout extends Component {
     constructor(props) {
@@ -39,11 +39,11 @@ export default class DailyWorkout extends Component {
     }
 
     changeRep(workoutIndex, setIndex) {
-        const { dayLog } = this.state;
-        // console.log(workoutIndex, setIndex);
-        dayLog[workoutIndex].sets[setIndex] = (dayLog[workoutIndex].sets[setIndex] === 0) ? 5 : --dayLog[workoutIndex].sets[setIndex];
-        console.log(dayLog);
+        const { dayLog, workout } = this.state;
+        dayLog[workoutIndex].sets[setIndex] = (dayLog[workoutIndex].sets[setIndex] === 0)
+            ? workout[workoutIndex].reps : --dayLog[workoutIndex].sets[setIndex];
         this.setState({ dayLog });
+        saveTempLog(dayLog);
     }
 
     saveWorkout() {
