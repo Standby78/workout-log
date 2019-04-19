@@ -5,11 +5,11 @@ import './exercise.scss';
 
 export default class Exercise extends Component {
     render() {
-        const { exercise } = this.props;
+        const { exercise, identifier, repHandler, log } = this.props;
         const reps = [];
-
+        console.log(exercise, identifier, repHandler);
         for (let i = 0; i < exercise.reps; i++) {
-            reps[i] = <span className="reps" key={i}>{exercise.reps}</span>;
+            reps[i] = <span className="reps" key={i} onClick={() => repHandler(identifier, i)}>{log && log[identifier].sets[i]}</span>;
         }
 
         return (
