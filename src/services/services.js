@@ -10,6 +10,10 @@ export function saveTempLog(dayLog) {
     console.log(dayLog);
 }
 
+export function getTempLog() {
+    return db.tempLog.toArray().then(result => result);
+}
+
 export function getCurrentDay() {
     return db.day.toArray().then(res => res);
 }
