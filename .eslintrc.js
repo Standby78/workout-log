@@ -53,6 +53,8 @@ module.exports = {
     "max-len": [2, 150, 4, {"ignoreUrls": true}],
     "react/destructuring-assignment": 1,
     "object-curly-newline": "off",
+    "class-methods-use-this": 1,
+    "no-trailing-spaces": 1,
     "no-plusplus": "off"
   },
 };

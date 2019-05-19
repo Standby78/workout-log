@@ -7,7 +7,6 @@ export function isEmpty(obj) {
 }
 export function saveTempLog(dayLog) {
     db.tempLog.clear().then(db.tempLog.put(dayLog));
-    console.log(dayLog);
 }
 
 export function getTempLog() {
@@ -22,8 +21,8 @@ export function updateLog() {
     console.log('saved');
 }
 
-export function setActiveWorkout(day_id) {
-    db.day.clear().then(db.workouts.get({ id: day_id }, (result) => {
+export async function setActiveWorkout(day_id) {
+    await db.day.clear().then(db.workouts.get({ id: day_id }, (result) => {
         const day = result.map(res => db.exercise.get({ id: res }).then(rest => rest));
         Promise.all(day).then(resultingDay => db.day.put(resultingDay));
     }));
