@@ -1,6 +1,6 @@
 import db from '../db';
 
-import { exercises } from '../constants/workout';
+import { exercises, workouts } from '../constants/workout';
 
 export function isEmpty(obj) {
     return (Object.keys(obj).length === 0);
@@ -21,11 +21,8 @@ export function updateLog() {
     console.log('saved');
 }
 
-export async function setActiveWorkout(day_id) {
-    await db.day.clear().then(db.workouts.get({ id: day_id }, (result) => {
-        const day = result.map(res => db.exercise.get({ id: res }).then(rest => rest));
-        Promise.all(day).then(resultingDay => db.day.put(resultingDay));
-    }));
+export async function setActiveWorkout(dayWorkout) {
+    await db.day.clear().then(db.day.put(dayWorkout));
 }
 
 export function checkActiveWorkout() {
@@ -45,6 +42,15 @@ export function setOfflineDefault() {
             });
         }
     });
+    db.workoutLog.count((result) => {
+        if (result === 0) {
+            // add here code to custimise weights depending on strength
+            // this part adds all exercises done to a workoutLog indexeDB
+            db.workoutLog.bulkPut(workouts.workoutDays);
+        }
+    });
+    // all until here should be enough for a simple harcoded app
+    // the rest is lagacy from first work done
     db.exercise.get({ exec_id: 'squats' }, (exercise) => {
         if (!exercise) {
             db.exercise.bulkPut(exercises).then(() => {
@@ -71,10 +77,12 @@ export function setOfflineDefault() {
             });
         }
     });
-    return db.user.get(1, async (user) => {
-        const workout = user.workoutDays.map(workouts => db.workouts.get(workouts, (result => result)));
+    return (db.user.get(1, async (user) => {
+        const workout = user.workoutDays.map(workoutstemp => db.workouts.get(workoutstemp, (result => result)));
         const res = await Promise.all(workout);
         const resmap = res.map(days => days.map(ex => db.exercise.get(ex)));
-        return resmap.map(promise => Promise.all(promise));
-    });
+        // here I get all I need, my workout log
+        const log = db.workoutLog.toArray();
+        return ([resmap.map(promise => Promise.all(promise)), log]);
+    }));
 }

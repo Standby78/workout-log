@@ -6,3 +6,11 @@ to do fitness app
 - https://github.com/carmalou/background-sync-example/blob/master/bg-sync-fallback-pt2.md
 - save workout button treba snimiti u log workout. trebam smisliti kako onda vaditi kilažu iz tih logova, da je povećam i upotrijebim u
 novom workoutu
+
+25.11.
+ - napravio osnovu loga, ostaje if-then-else petlja koju sam napravio i obrisao kao pravi donk, pa je moram napraviti ponovo. Ideja je da
+ uzmem log, pogledam da li je prošlo više od 21 dan od zanjedg workouta, ako nije povećaj kilažu za 2.5 kg. Ako je, onda check da li je prošlo
+ više od 90 dana pa idemo ispočetka. Ako nije, smanji za 10% + 2.5 kg i idi na prvi if. - napravio 6.12. (napola, ostalo je napraviti reset)
+ 6.12.
+ - workoutlog mi nije baš najbolji, tu imam setsxreps, ali nemam sets x actual reps. morao bi imati još jedan detaljan log gdje upisujem koliko
+ je reps bilo u sets. ako workout log ima array sa reps, onda bi mogao izbjeći dupli collection.

@@ -8,6 +8,8 @@ db.version(1).stores({
     exercise: '++id, exec_id, sets, reps, weight',
     log: '++id, date, user, dayLog',
     tempLog: '++id, dayLog',
+    // log of all exercises
+    workoutLog: '++id, date, exec_id, sets, reps, weight',
 });
 
 export default db;

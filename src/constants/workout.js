@@ -6,61 +6,70 @@ module.exports = {
         workoutDays: [
             [
                 {
+                    date: '00000000',
+                },
+                {
                     exec_id: 'squats',
                     sets: 5,
-                    reps: 5,
-                    weight: 95,
+                    reps: [5, 5, 5, 5, 5],
+                    weight: 60,
                 },
                 {
                     exec_id: 'romanian deadlift',
                     sets: 5,
-                    reps: 5,
-                    weight: 80,
+                    reps: [5, 5, 5, 5, 5],
+                    weight: 60,
                 },
                 {
                     exec_id: 'wide grip pull ups',
                     sets: 5,
-                    reps: 5,
+                    reps: [5, 5, 5, 5, 5],
                     weight: 0,
                 },
             ],
             [
                 {
+                    date: '00000000',
+                },
+                {
                     exec_id: 'bench press',
                     sets: 5,
-                    reps: 5,
-                    weight: 100,
+                    reps: [5, 5, 5, 5, 5],
+                    weight: 60,
                 },
                 {
                     exec_id: 'bent over rows',
                     sets: 5,
-                    reps: 5,
-                    weight: 90,
+                    reps: [5, 5, 5, 5, 5],
+                    weight: 50,
                 },
                 {
                     exec_id: 'dips',
                     sets: 5,
-                    reps: 5,
+                    reps: [5, 5, 5, 5, 5],
                     weight: 0,
                 },
             ],
             [
                 {
+                    date: '00000000',
+                },
+                {
                     exec_id: 'deadlift',
                     sets: 5,
-                    reps: 5,
-                    weight: 130,
+                    reps: [5, 5, 5, 5, 5],
+                    weight: 80,
                 },
                 {
                     exec_id: 'overhead press',
                     sets: 5,
-                    reps: 5,
-                    weight: 60,
+                    reps: [5, 5, 5, 5, 5],
+                    weight: 30,
                 },
                 {
                     exec_id: 'close grip pull up',
                     sets: 5,
-                    reps: 5,
+                    reps: [5, 5, 5, 5, 5],
                     weight: 0,
                 },
             ],
@@ -71,13 +80,13 @@ module.exports = {
             exec_id: 'squats',
             sets: 5,
             reps: 5,
-            weight: 95,
+            weight: 0,
         },
         {
             exec_id: 'romanian deadlift',
             sets: 5,
             reps: 5,
-            weight: 80,
+            weight: 0,
         },
         {
             exec_id: 'close grip pull up',
@@ -89,13 +98,13 @@ module.exports = {
             exec_id: 'bench press',
             sets: 5,
             reps: 5,
-            weight: 100,
+            weight: 0,
         },
         {
             exec_id: 'bent over rows',
             sets: 5,
             reps: 5,
-            weight: 90,
+            weight: 0,
         },
         {
             exec_id: 'dips',
@@ -107,13 +116,13 @@ module.exports = {
             exec_id: 'deadlift',
             sets: 5,
             reps: 5,
-            weight: 130,
+            weight: 0,
         },
         {
             exec_id: 'overhead press',
             sets: 5,
             reps: 5,
-            weight: 60,
+            weight: 0,
         },
         {
             exec_id: 'wide grip pull ups',

@@ -5,20 +5,21 @@ import { isEmpty, getCurrentDay, saveTempLog, getTempLog } from '../../services/
 export default class DailyWorkout extends Component {
     constructor(props) {
         super(props);
-        const { workout } = this.props;
+        const { dayWorkout, nextWorkout } = this.props;
         this.state = {
-            workout,
+            workout: dayWorkout,
+            nextWorkout,
         };
         this.changeRep = this.changeRep.bind(this);
     }
 
     componentDidMount() {
-        const { workout } = this.props;
-        console.log('see workout', workout);
-        if (isEmpty(workout)) {
+        const { dayWorkout } = this.props;
+        if (isEmpty(dayWorkout)) {
             getCurrentDay().then((dbDayResult) => {
+                dbDayResult[0].shift();
                 this.setState({ workout: dbDayResult[0] });
-                let daySets = [];
+                /* let daySets = [];
                 if (dbDayResult.length > 0) {
                     daySets = dbDayResult[0].map((exercise) => {
                         const log = [];
@@ -41,10 +42,10 @@ export default class DailyWorkout extends Component {
                         console.log('result', result);
                         this.setState({ dayLog: result });
                     });
-                }
+                }*/
             });
-        } else {
-            const dayLog = workout.map((exercise) => {
+        }/* else {
+            const dayLog = dayWorkout.map((exercise) => {
                 const result = exercise;
                 const log = [];
                 for (let i = exercise.sets - 1; i >= 0; i--) {
@@ -53,11 +54,15 @@ export default class DailyWorkout extends Component {
                 result.sets = log;
                 return exercise;
             });
-            console.log('workout', workout, dayLog);
+            console.log('workout', dayWorkout, dayLog);
             this.setState({ dayLog });
-        }
+        } */
     }
 
+    // this needs to be fixed now, the whole logic will need to be recoded - 8.12.
+    // there should be an update on a dayLog db that will hold the current progress, and updates state
+    // every exercise has it's own index and each in turn has the index of the set
+    // make a copy of the workout with empty reps, update database/state, set starting number of reps from daily workout data
     changeRep(workoutIndex, setIndex) {
         const { dayLog, workout } = this.state;
         if (typeof dayLog !== 'undefined' && dayLog.length > 0) {
@@ -73,14 +78,14 @@ export default class DailyWorkout extends Component {
     }
 
     render() {
-        const { workout, dayLog } = this.state;
-        console.log('state', workout, dayLog);
+        const { nextWorkout, workout, dayLog } = this.state;
         let exercises = '';
-        if (dayLog !== undefined && workout !== undefined && workout.length > 0) {
+        if (workout && workout.length > 0) {
             exercises = workout.map((exercise, index) =>
                 (
                     <div key={index}>
-                        <Exercise key={index} log={dayLog[index]} identifier={index} repHandler={this.changeRep} exercise={exercise} />
+                        {/* <Exercise key={index} log={dayLog[index]} identifier={index} repHandler={this.changeRep} exercise={exercise} /> */}
+                        <Exercise key={index} identifier={index} repHandler={this.changeRep} exercise={exercise} />
                     </div>
                 ));
         } else {

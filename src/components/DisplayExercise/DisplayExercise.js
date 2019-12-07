@@ -9,15 +9,15 @@ export default class DisplayExercise extends Component {
         const { exercise } = this.props;
         const reps = [];
 
-        for (let i = 0; i < exercise.reps; i++) {
-            reps[i] = <span className="reps" key={i}>{exercise.reps}</span>;
+        for (let i = 0; i < exercise.sets; i++) {
+            reps[i] = <div key={i}>{i + 1} x {exercise.reps[i]}</div>;
         }
 
         return (
             <div className="exercise-component">
                 <div>
                     {exercise.exec_id} - Weight: {(exercise.weight !== 0) ? ` ${exercise.weight} kg` : ' bodyweight'}<br />
-                    {exercise.sets} x {exercise.reps}
+                    {reps}
                 </div>
             </div>
         );
