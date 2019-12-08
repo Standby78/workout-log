@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import './exercise.scss';
 
 const Exercise = ({ exercise, identifier, repHandler, log }) => {
+    console.log(exercise);
     const sets = [];
-    for (let i = 0; i < exercise.reps.length; i++) {
-        sets[i] = <span className="reps" key={i} onClick={() => repHandler(identifier, i)}>{ log && exercise.reps[i]}</span>;
+    if (exercise.reps) {
+        for (let i = 0; i < exercise.reps.length; i++) {
+            sets[i] = <span className="reps" key={i} onClick={() => repHandler(identifier, i)}>{ log && exercise.reps[i]}</span>;
+        };    
     }
 
     return (

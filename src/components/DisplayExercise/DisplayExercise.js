@@ -8,7 +8,6 @@ export default class DisplayExercise extends Component {
     render() {
         const { exercise } = this.props;
         const reps = [];
-
         for (let i = 0; i < exercise.sets; i++) {
             reps[i] = <div key={i}>{i + 1} x {exercise.reps[i]}</div>;
         }

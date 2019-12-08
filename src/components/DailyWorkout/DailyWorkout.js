@@ -5,58 +5,21 @@ import { isEmpty, getCurrentDay, saveTempLog, getTempLog } from '../../services/
 export default class DailyWorkout extends Component {
     constructor(props) {
         super(props);
-        const { dayWorkout, nextWorkout } = this.props;
+        const { nextWorkout } = this.props;
         this.state = {
-            workout: dayWorkout,
+            workout: [],
             nextWorkout,
         };
         this.changeRep = this.changeRep.bind(this);
     }
 
     componentDidMount() {
-        const { dayWorkout } = this.props;
-        if (isEmpty(dayWorkout)) {
-            getCurrentDay().then((dbDayResult) => {
-                dbDayResult[0].shift();
-                this.setState({ workout: dbDayResult[0] });
-                /* let daySets = [];
-                if (dbDayResult.length > 0) {
-                    daySets = dbDayResult[0].map((exercise) => {
-                        const log = [];
-                        for (let i = exercise.sets - 1; i >= 0; i--) {
-                            log[i] = 0;
-                        }
-                        return log;
-                    });
-                    getTempLog().then((result) => {
-                        if (result[0] === undefined) {
-                            dbDayResult[0].forEach((exercise, index) => {
-                                const exerciseLog = {};
-                                exerciseLog.id = exercise.id;
-                                exerciseLog.sets = daySets[index];
-                                exerciseLog.weight = exercise.weight;
-                                exerciseLog.day = new Date().toISOString().split('T')[0]; // eslint-disable-line
-                                result.push(exerciseLog);
-                            });
-                        }
-                        console.log('result', result);
-                        this.setState({ dayLog: result });
-                    });
-                }*/
-            });
-        }/* else {
-            const dayLog = dayWorkout.map((exercise) => {
-                const result = exercise;
-                const log = [];
-                for (let i = exercise.sets - 1; i >= 0; i--) {
-                    log[i] = 0;
-                }
-                result.sets = log;
-                return exercise;
-            });
-            console.log('workout', dayWorkout, dayLog);
-            this.setState({ dayLog });
-        } */
+        console.log('get day workout from db')
+        getCurrentDay().then((dbDayResult) => {
+            dbDayResult[0].shift();
+            console.log(dbDayResult[0]);
+            this.setState({ workout: dbDayResult[0] });
+        });
     }
 
     // this needs to be fixed now, the whole logic will need to be recoded - 8.12.
@@ -78,13 +41,12 @@ export default class DailyWorkout extends Component {
     }
 
     render() {
-        const { nextWorkout, workout, dayLog } = this.state;
-        let exercises = '';
-        if (workout && workout.length > 0) {
+        const { workout } = this.state;
+        let exercises = [];
+        if (!isEmpty(workout)) {
             exercises = workout.map((exercise, index) =>
                 (
                     <div key={index}>
-                        {/* <Exercise key={index} log={dayLog[index]} identifier={index} repHandler={this.changeRep} exercise={exercise} /> */}
                         <Exercise key={index} identifier={index} repHandler={this.changeRep} exercise={exercise} />
                     </div>
                 ));

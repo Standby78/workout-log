@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import moment from 'moment';
 
 import { setOfflineDefault, setActiveWorkout, checkActiveWorkout } from './services/services';
-import { isEmpty, getCurrentDay, saveTempLog, getTempLog, setWorkoutInState } from './services/services';
-
 
 import { DailyWorkout, Workout } from './components';
 
@@ -79,8 +77,9 @@ class App extends Component {
     setDayWorkout(dayWorkout, day_id) {
         let date = new Date();
         date = moment(date).format('YYYY-MM-DD');
-        const dateObj = { date };
-        this.setState({ dayWorkout });
+        const dateObj = { date, day: day_id };
+        dayWorkout.shift();
+        console.log('going into setworkout', dayWorkout);
         dayWorkout.unshift(dateObj);
         setActiveWorkout(dayWorkout);
             /* setActiveWorkout(dayWorkout,day_id).then(() => {
@@ -119,7 +118,7 @@ class App extends Component {
         const { dayWorkout, allDays, workoutActive, workoutLog } = this.state;
 
         const dailyWorkouts = workoutLog ? workoutLog.filter(element => element[0].date === '00000000') : [];
-        dailyWorkouts.forEach(exercise => exercise.shift());
+        // dailyWorkouts.forEach(exercise => exercise.shift());
 
         return (
             <div>
@@ -139,7 +138,7 @@ class App extends Component {
                             )}
                             <Route
                                 path="/daily-workout"
-                                render={props => <DailyWorkout {...props} dayWorkout={dayWorkout} />}
+                                render={props => <DailyWorkout {...props} />}
                             />
                             <Route component={NotFoundComponent} />
                         </Switch>

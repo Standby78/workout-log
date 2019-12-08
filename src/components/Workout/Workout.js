@@ -23,14 +23,19 @@ export default class Workout extends Component {
     render() {
         const { day, setWorkout, workouts } = this.props;
         const { day_id } = this.state;
+        let displayExercise = [];
+        displayExercise = workouts.map((workoutDay, index) => {
+            const onlyExercises = workoutDay.slice(1);
+            return (
+                <div key={index}>
+                    {onlyExercises.map((exercise, i) => <DisplayExercise key={i} exercise={exercise} />)}
+                </div>
+            );
+        });
         return (
             <div>
                 <SwipeableViews hysteresis={0.2} onChangeIndex={index => this.setDay(index + 1)}>
-                    {workouts && workouts.map((workoutDay, index) => (
-                        <div key={index}>
-                            {workoutDay.map((exercise, i) => <DisplayExercise key={i} exercise={exercise} />)}
-                        </div>
-                    ))}
+                    {displayExercise}
                 </SwipeableViews>
                 <Link to="/daily-workout" value={day_id} onClick={() => setWorkout(workouts[day_id - 1], day_id)}>Start Workout</Link>
             </div>

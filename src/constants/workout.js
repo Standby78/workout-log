@@ -7,6 +7,7 @@ module.exports = {
             [
                 {
                     date: '00000000',
+                    day: 1,
                 },
                 {
                     exec_id: 'squats',
@@ -30,6 +31,7 @@ module.exports = {
             [
                 {
                     date: '00000000',
+                    day: 2,
                 },
                 {
                     exec_id: 'bench press',
@@ -53,6 +55,7 @@ module.exports = {
             [
                 {
                     date: '00000000',
+                    day: 3,
                 },
                 {
                     exec_id: 'deadlift',
