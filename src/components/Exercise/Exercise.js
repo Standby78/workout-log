@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 
 import './exercise.scss';
 
-const Exercise = ({ exercise, identifier, repHandler, log }) => {
-    console.log(exercise);
+// done with reps sending, handle onclick, while saving result in daily workout
+const Exercise = ({ exercise, identifier, repHandler, log, reps }) => {
+    console.log(exercise, reps);
     const sets = [];
     if (exercise.reps) {
         for (let i = 0; i < exercise.reps.length; i++) {
-            sets[i] = <span className="reps" key={i} onClick={() => repHandler(identifier, i)}>{ log && exercise.reps[i]}</span>;
+            sets[i] = <span className="reps" key={i} onClick={() => repHandler(identifier, i)}>{ reps && (reps[i] === 0) ? '' : reps[i]}</span>;
         };    
     }
 

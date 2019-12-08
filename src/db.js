@@ -10,6 +10,7 @@ db.version(1).stores({
     tempLog: '++id, dayLog',
     // log of all exercises
     workoutLog: '++id, date, exec_id, sets, reps, weight',
+    tempReps: '++id, reps',
 });
 
 export default db;

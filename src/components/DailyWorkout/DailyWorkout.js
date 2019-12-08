@@ -14,11 +14,18 @@ export default class DailyWorkout extends Component {
     }
 
     componentDidMount() {
-        console.log('get day workout from db')
-        getCurrentDay().then((dbDayResult) => {
-            dbDayResult[0].shift();
-            console.log(dbDayResult[0]);
-            this.setState({ workout: dbDayResult[0] });
+        console.log('get day workout from db');
+        const activeDay = getCurrentDay();
+        activeDay.day.then((res) => {
+            console.log('resolved', res);
+            res[0].shift();
+            console.log(res[0]);
+            const day = res[0];
+            activeDay.reps.then((result) => {
+                console.log('resolved 2', result);
+                const reps = result[0];
+                this.setState({ workout: day, reps: reps });
+            });
         });
     }
 
@@ -41,13 +48,13 @@ export default class DailyWorkout extends Component {
     }
 
     render() {
-        const { workout } = this.state;
+        const { workout, reps } = this.state;
         let exercises = [];
         if (!isEmpty(workout)) {
             exercises = workout.map((exercise, index) =>
                 (
                     <div key={index}>
-                        <Exercise key={index} identifier={index} repHandler={this.changeRep} exercise={exercise} />
+                        <Exercise key={index} identifier={index} repHandler={this.changeRep} exercise={exercise} reps={reps[index]} />
                     </div>
                 ));
         } else {

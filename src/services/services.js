@@ -14,7 +14,9 @@ export function getTempLog() {
 }
 
 export function getCurrentDay() {
-    return db.day.toArray().then(res => res);
+    const day = db.day.toArray().then(res => res);
+    const reps = db.tempReps.toArray().then(res => res);
+    return ({ day, reps });
 }
 
 export function updateLog() {
@@ -23,6 +25,14 @@ export function updateLog() {
 
 export async function setActiveWorkout(dayWorkout) {
     await db.day.clear().then(db.day.put(dayWorkout));
+    const reps = [];
+    dayWorkout.forEach((res, index) => {
+        if (index !== 0) {
+            reps.push(Array(res.reps.length).fill(0));
+        }
+    });
+    console.log(reps);
+    await db.tempReps.clear().then(db.tempReps.put(reps));
 }
 
 export function checkActiveWorkout() {
